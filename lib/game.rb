@@ -1,14 +1,33 @@
 class Game
-  attr_accessor :player, :dealer, :deck, :balance, :bet, :state, :win
+  include Singleton
+
+  attr_accessor :player, :dealer, :deck, :balance, :bet, :state, :result
+  private_class_method :new
 
   SCORE_21 = 21
 
   def initialize
-    @player = Hand.new
-    @dealer = Hand.new
     @balance = 1000
     @deck = Deck.new
     @bet = 0
+    puts 10
+    puts @balance
+
+    firstDeal
+  end
+
+
+  def makeBet(bet)
+    @bet = bet
+  end
+
+  def takeCard(hand)
+    hand.addCard(@deck.cards.pop)
+  end
+
+  def firstDeal
+    @player = Hand.new
+    @dealer = Hand.new
     @state = FirstDealState.new(self)
 
     @player.addCard(@deck.cards.pop)
@@ -17,26 +36,29 @@ class Game
     @dealer.addCard(@deck.cards.pop, false)
   end
 
-  def instance
-
-  end
-
-  def makeBet(bet)
-    @balance -= bet
-    @bet = bet
-  end
-
-  def takeCard(hand)
-    hand.addCard(@deck.cards.pop)
-  end
-
-  def addWin(rate)
+  def playerWin(rate)
     @win = true
-    @balance += rate * 2
+    @balance += rate * 2 * @bet
+    @state = FinishState.new(self)
+  end
+
+  def playerLoose
+    @result = :loose
+    @balance -= @bet
+    @state = FinishState.new(self)
+  end
+
+  def stay
+    @result = :win
+    @state = FinishState.new(self)
   end
 
   def getChoices
     @state.checkState
     return @state.getChoices
+  end
+
+  def restartGame
+    @@instance = new
   end
 end

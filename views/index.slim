@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title BlackJack
+    meta name="keywords" content="blackjack"
+    link rel="stylesheet" href="css/style.css"  type='text/css'
+  body
+    #content
+      h1 = "Balance #{@game.balance}"
+      h2 Dealer
+      == render :slim, :hand, :locals => {:hand => @game.dealer}
+      h2 Player
+      == render :slim, :hand, :locals => {:hand => @game.player}

@@ -1,10 +1,10 @@
 class Card
   attr_accessor :rank, :suit, :is_opened
 
-  SUIT_HEARTS = 'Hearts'
-  SUIT_CLUBS = 'Clubs'
-  SUIT_DIAMONDS = 'Diamonds'
-  SUIT_SPADES = 'Spades'
+  SUIT_HEARTS = :hearts
+  SUIT_CLUBS = :clubs
+  SUIT_DIAMONDS = :diams
+  SUIT_SPADES = :spades
 
   RANK_2 = 2
   RANK_3 = 3

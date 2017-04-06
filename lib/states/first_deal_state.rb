@@ -1,15 +1,12 @@
-class FirstDealState
-  include State
+require_relative 'state'
+
+class FirstDealState < State
 
   WIN_RATE = 1.5
 
-  def initialize(game)
-    super
-  end
-
   def checkState
     if @game.player.scores = Game::SCORE_21
-        @game.addWin(WIN_RATE)
+        @game.playerWin(WIN_RATE)
     end
     @state = PlayState.new(@game)
   end

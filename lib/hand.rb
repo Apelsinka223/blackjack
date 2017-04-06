@@ -15,4 +15,9 @@ class Hand
   def addScores(card)
     @scores += card.getScore(@scores)
   end
+
+  def reset
+    @cards = []
+    @scores = 0
+  end
 end

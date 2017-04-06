@@ -1,13 +1,10 @@
-class StopState
-  include State
+require_relative 'state'
 
-  def initialize(game)
-    super
-  end
+class StopState < State
 
   def checkState
-    if @game.dealer.scores = Game::SCORE_21
-      @game.state = StopState.new(@game)
+    if @game.dealer.scores == Game::SCORE_21 and @game.player.scores == Game::SCORE_21
+      @game.playerLoose
     end
   end
 

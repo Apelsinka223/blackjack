@@ -1,11 +1,8 @@
-class FinishState
-  include State
+require_relative 'state'
+
+class FinishState < State
 
   WIN_RATE = 1
-
-  def initialize(game)
-    super
-  end
 
   def checkState
   end
