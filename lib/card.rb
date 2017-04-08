@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Card
   attr_accessor :rank, :suit, :is_opened
 
@@ -24,25 +25,62 @@ class Card
   SCORE_RANK_A_MIN = 1
   SCORE_RANK_A_MAX = 11
 
+  RANKS = [
+      RANK_2,
+      RANK_3,
+      RANK_4,
+      RANK_5,
+      RANK_6,
+      RANK_7,
+      RANK_8,
+      RANK_9,
+      RANK_10,
+      RANK_J,
+      RANK_Q,
+      RANK_K,
+      RANK_A,
+  ]
+
+  SUITS = [
+      SUIT_HEARTS,
+      SUIT_CLUBS,
+      SUIT_DIAMONDS,
+      SUIT_SPADES,
+  ]
 
   def initialize(rank, suit)
+    unless RANKS.include? rank
+      raise "Unknown rank #{rank}"
+    end
+    unless SUITS.include? suit
+      raise "Unknown suit #{suit}"
+    end
+
     @rank = rank
     @suit = suit
     @is_opened = false
   end
 
-  def getScore(handScores = 0)
-    case @rank
-      when RANK_2..RANK_10 then
-        return @rank
-      when RANK_J, RANK_Q, RANK_K
-        return SCORE_RANK_TITLES
-      when RANK_A
-        if handScores >= Game::SCORE_21
-          return SCORE_RANK_A_MAX
-        else
-          return SCORE_RANK_A_MIN
-        end
+  def get_score(hand_scores = 0)
+    unless hand_scores.is_a? Numeric
+      raise 'Not numeric hand scores'
     end
+
+    case @rank
+    when RANK_2..RANK_10 then
+      @rank
+    when RANK_J, RANK_Q, RANK_K
+      SCORE_RANK_TITLES
+    when RANK_A
+      if hand_scores >= Game::SCORE_21
+        SCORE_RANK_A_MIN
+      else
+        SCORE_RANK_A_MAX
+      end
+    end
+  end
+
+  def to_s
+    "#{@rank}-#{@suit}"
   end
 end

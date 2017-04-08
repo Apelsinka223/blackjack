@@ -1,17 +1,22 @@
+# encoding: UTF-8
 require_relative 'state'
 
-class FinishState < State
+module FinishState
+  extend State
 
-  WIN_RATE = 1
+  class << self
+    def check_state(*); end
 
-  def checkState
-  end
+    def get_choices(game)
+      unless game.is_a? Game
+        raise "#{game} is not a Game"
+      end
 
-  def getChoices
-    if @game.balance > 0
-      return [
-        :new_game
-     ]
+      if game.balance >= game.bet and game.deck.has_enough_cards
+        {:new_game => 'Сдать карты'}
+      else
+        {:restart_game => 'Перезапустить игру'}
+      end
     end
   end
 end

@@ -1,64 +1,107 @@
+# encoding: UTF-8
 class Game
   include Singleton
+  include Log
 
   attr_accessor :player, :dealer, :deck, :balance, :bet, :state, :result
   private_class_method :new
 
   SCORE_21 = 21
+  SCORE_DEALER_STOP = 17
+  START_BALANCE = 1000
 
   def initialize
-    @balance = 1000
+    logger.info 'Start'
+    @balance = START_BALANCE
     @deck = Deck.new
-    @bet = 0
-    puts 10
-    puts @balance
-
-    firstDeal
+    @result = nil
   end
 
+  def make_bet(bet)
+    if bet <= 0 or bet > @balance
+      return 'Ставка должна быть больше 0 и меньше баланса'
+    end
 
-  def makeBet(bet)
     @bet = bet
   end
 
-  def takeCard(hand)
-    hand.addCard(@deck.cards.pop)
-  end
-
-  def firstDeal
-    @player = Hand.new
-    @dealer = Hand.new
-    @state = FirstDealState.new(self)
-
-    @player.addCard(@deck.cards.pop)
-    @player.addCard(@deck.cards.pop)
-    @dealer.addCard(@deck.cards.pop)
-    @dealer.addCard(@deck.cards.pop, false)
-  end
-
-  def playerWin(rate)
-    @win = true
-    @balance += rate * 2 * @bet
-    @state = FinishState.new(self)
-  end
-
-  def playerLoose
-    @result = :loose
+  def double_bet
     @balance -= @bet
-    @state = FinishState.new(self)
+    @bet *= 2
+  end
+
+  def take_card(hand)
+    unless hand.is_a? Hand
+      raise "#{hand} is not a Hand"
+    end
+
+    hand.add_card(@deck.cards.pop)
+    @state.check_state(self)
+  end
+
+  def start_game
+    @balance -= @bet
+    @player = Hand.new(:player)
+    @dealer = Hand.new(:dealer)
+
+    @player.add_card(@deck.cards.pop)
+    @player.add_card(@deck.cards.pop)
+    @dealer.add_card(@deck.cards.pop)
+    @dealer.add_card(@deck.cards.pop, false)
+
+    change_state(FirstDealState)
+  end
+
+  def restart_game
+    @balance = START_BALANCE
+    @deck = Deck.new
+    @bet = nil
+    @result = nil
+  end
+
+  def player_win(rate)
+    unless rate.is_a? Numeric
+      raise "#{rate} is not Numeric"
+    end
+    if rate < 0
+      raise 'Rate must be greater than 0'
+    end
+
+    @result = :win
+    @balance += (rate * 2 * @bet).to_i
+  end
+
+  def player_loose
+    @result = :loose
   end
 
   def stay
-    @result = :win
-    @state = FinishState.new(self)
+    @result = :stay
+    @balance += @bet
   end
 
-  def getChoices
-    @state.checkState
-    return @state.getChoices
+  def get_choices
+    @state.check_state(self)
+    @state.get_choices(self)
   end
 
-  def restartGame
-    @@instance = new
+  def change_state(state)
+    unless state.is_a? State
+      raise "#{state} is not a State"
+    end
+
+    logger.info "State change from #{@state} to #{state}"
+    @state = state
+
+    if @state == StopState
+      @dealer.open_cards
+      while @dealer.scores < Game::SCORE_DEALER_STOP do
+        take_card(@dealer)
+      end
+    elsif @state ==  FinishState
+      @dealer.open_cards
+    end
+    @state.check_state(self)
   end
+
 end

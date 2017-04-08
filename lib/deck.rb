@@ -1,5 +1,8 @@
+# encoding: UTF-8
 class Deck
   attr_accessor :cards
+
+  ENOUGH_SCORE = 42
 
   def initialize
     @cards = [
@@ -59,4 +62,7 @@ class Deck
     @cards = @cards.shuffle
   end
 
+  def has_enough_cards
+    @cards.reduce(0) { |sum, card| sum + card.get_score} >= ENOUGH_SCORE
+  end
 end

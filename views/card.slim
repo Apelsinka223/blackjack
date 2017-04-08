@@ -1,0 +1,5 @@
+div class="card rank-#{card.rank} #{card.suit} #{!card.is_opened ? 'back' : ''}"
+  span class="rank"
+    | #{card.rank}
+  span class="suit"
+    | &#{card.suit};

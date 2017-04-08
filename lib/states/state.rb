@@ -1,18 +1,28 @@
-class State
+# encoding: UTF-8
+module State
+  include Log
+  WIN_RATE = 1
 
-  def initialize(game)
-    @game = game
-  end
+  def check_state(game)
+    unless game.is_a? Game
+      raise "#{game} is not a Game"
+    end
 
-  def checkState
     raise 'Not implemented'
   end
 
-  def getChoices
-    return [
-        :take_card,
-        :double_bet,
-        :stop
-    ]
+  def get_choices(game)
+    unless game.is_a? Game
+      raise "#{game} is not a Game"
+    end
+
+    choices = {
+      :take_card => 'Взять карту',
+      :stop => 'Стоп',
+    }
+    if game.balance > game.bet
+      choices[:double_bet] = 'Удвоить ставку'
+    end
+    choices
   end
 end

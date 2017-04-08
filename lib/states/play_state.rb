@@ -1,14 +1,22 @@
+# encoding: UTF-8
 require_relative 'state'
 
-class PlayState < State
+module PlayState
+  extend State
 
-  def checkState
-    if @game.player.scores == Game::SCORE_21
-      @game.state = StopState.new(@game)
+  class << self
+    def check_state(game)
+      unless game.is_a? Game
+        raise "#{game} is not a Game"
+      end
+
+      if game.player.scores == Game::SCORE_21
+        game.change_state(StopState)
+      elsif game.player.scores > Game::SCORE_21
+        game.player_loose
+        game.change_state(FinishState)
+      end
     end
   end
 
-  def getChoices
-    super
-  end
 end

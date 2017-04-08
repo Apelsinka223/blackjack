@@ -5,9 +5,19 @@ html
     meta name="keywords" content="blackjack"
     link rel="stylesheet" href="css/style.css"  type='text/css'
   body
-    #content
-      h1 = "Balance #{@game.balance}"
-      h2 Dealer
-      == render :slim, :hand, :locals => {:hand => @game.dealer}
-      h2 Player
-      == render :slim, :hand, :locals => {:hand => @game.player}
+    .container
+      h1 = "Баланс #{@game.balance}"
+      - unless @game.bet.nil?
+        h2 = "Ставка #{@game.bet}"
+      .jumbotron
+        - unless @game.result.nil?
+          h1 = @game.result
+
+        - if @game.bet.nil?
+          == render :slim, :bet_form, :locals => {:balance => @game.balance, :error => @error}
+        - else
+          == render :slim, :hand, :locals => {:hand => @game.dealer}
+          == render :slim, :hand, :locals => {:hand => @game.player}
+
+          - unless @game.get_choices.nil?
+              == render :slim, :choices, :locals => {:choices => @game.get_choices}
