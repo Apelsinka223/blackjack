@@ -6,3 +6,16 @@
 .playingCards {
     font-size: 2em;
 }
+
+.result {
+    position: absolute;
+    top: 40%;
+    padding: 1% 20%;
+    background: white ;
+    opacity: 0.7;
+    z-index: 100;
+}
+
+.result h1 {
+    opacity: 1;
+}

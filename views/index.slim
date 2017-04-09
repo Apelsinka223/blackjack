@@ -11,7 +11,8 @@ html
         h2 = "Ставка #{@game.bet}"
       .jumbotron
         - unless @game.result.nil?
-          h1 = @game.result
+          .result
+            h1 = @game.result.upcase
 
         - if @game.bet.nil?
           == render :slim, :bet_form, :locals => {:balance => @game.balance, :error => @error}

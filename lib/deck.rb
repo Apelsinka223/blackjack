@@ -62,7 +62,7 @@ class Deck
     @cards = @cards.shuffle
   end
 
-  def has_enough_cards
+  def has_enough_cards?
     @cards.reduce(0) { |sum, card| sum + card.get_score} >= ENOUGH_SCORE
   end
 end

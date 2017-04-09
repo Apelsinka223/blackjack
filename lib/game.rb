@@ -14,7 +14,7 @@ class Game
     logger.info 'Start'
     @balance = START_BALANCE
     @deck = Deck.new
-    @result = nil
+    @state = StartState
   end
 
   def make_bet(bet)
@@ -40,6 +40,7 @@ class Game
   end
 
   def start_game
+    @result = nil
     @balance -= @bet
     @player = Hand.new(:player)
     @dealer = Hand.new(:dealer)
@@ -57,6 +58,7 @@ class Game
     @deck = Deck.new
     @bet = nil
     @result = nil
+    @state = StartState
   end
 
   def player_win(rate)
@@ -102,6 +104,10 @@ class Game
       @dealer.open_cards
     end
     @state.check_state(self)
+  end
+
+  def has_choice?(choice)
+    @state.get_choices(self).has_key? choice
   end
 
 end
