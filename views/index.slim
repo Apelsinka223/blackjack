@@ -3,12 +3,13 @@ html
   head
     title BlackJack
     meta name="keywords" content="blackjack"
+    link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon"
     link rel="stylesheet" href="css/style.css"  type='text/css'
   body
     .container
-      h1 = "Баланс #{@game.balance}"
+      h3 = "Баланс #{@game.balance}"
       - unless @game.bet.nil?
-        h2 = "Ставка #{@game.bet}"
+        h4 = "Ставка #{@game.bet}"
       .jumbotron
         - unless @game.result.nil?
           .result

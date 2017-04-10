@@ -1,4 +1,4 @@
-h2 #{hand.name.upcase}: #{hand.get_open_scores}
+h4 #{hand.name.upcase}: #{hand.get_open_scores}
 div class="playingCards simpleCards"
   - hand.cards.each do |card|
     == render :slim, :card, :locals => {:card => card}
