@@ -25,5 +25,12 @@ module StopState
     def get_choices(*)
       {}
     end
+
+    def after_change(game)
+      game.dealer.open_cards
+      while game.dealer.scores < Game::SCORE_DEALER_STOP do
+        game.take_card(game.dealer)
+      end
+    end
   end
 end

@@ -25,4 +25,6 @@ module State
     end
     choices
   end
+
+  def after_change(game); end
 end

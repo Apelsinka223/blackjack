@@ -2,7 +2,7 @@
 require_relative 'log'
 class Hand
   include Log
-  attr_accessor :cards, :scores, :name
+  attr_reader :cards, :scores, :name
 
   def initialize(name)
     @cards = []

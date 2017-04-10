@@ -18,5 +18,9 @@ module FinishState
         {:restart_game => 'Перезапустить игру'}
       end
     end
+
+    def after_change(game)
+      game.dealer.open_cards
+    end
   end
 end

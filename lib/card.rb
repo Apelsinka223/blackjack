@@ -1,6 +1,10 @@
 # encoding: UTF-8
+
+require_relative 'game'
+
 class Card
-  attr_accessor :rank, :suit, :is_opened
+  attr_accessor :is_opened
+  attr_reader :rank, :suit
 
   SUIT_HEARTS = :hearts
   SUIT_CLUBS = :clubs

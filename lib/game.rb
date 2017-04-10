@@ -3,7 +3,7 @@ class Game
   include Singleton
   include Log
 
-  attr_accessor :player, :dealer, :deck, :balance, :bet, :state, :result
+  attr_reader :player, :dealer, :deck, :balance, :bet, :state, :result
   private_class_method :new
 
   SCORE_21 = 21
@@ -35,7 +35,7 @@ class Game
       raise "#{hand} is not a Hand"
     end
 
-    hand.add_card(@deck.cards.pop)
+    hand.add_card(@deck.get_card)
     @state.check_state(self)
   end
 
@@ -45,10 +45,10 @@ class Game
     @player = Hand.new(:player)
     @dealer = Hand.new(:dealer)
 
-    @player.add_card(@deck.cards.pop)
-    @player.add_card(@deck.cards.pop)
-    @dealer.add_card(@deck.cards.pop)
-    @dealer.add_card(@deck.cards.pop, false)
+    @player.add_card(@deck.get_card)
+    @player.add_card(@deck.get_card)
+    @dealer.add_card(@deck.get_card)
+    @dealer.add_card(@deck.get_card, false)
 
     change_state(FirstDealState)
   end
@@ -94,15 +94,7 @@ class Game
 
     logger.info "State change from #{@state} to #{state}"
     @state = state
-
-    if @state == StopState
-      @dealer.open_cards
-      while @dealer.scores < Game::SCORE_DEALER_STOP do
-        take_card(@dealer)
-      end
-    elsif @state ==  FinishState
-      @dealer.open_cards
-    end
+    @state.after_change(self)
     @state.check_state(self)
   end
 
