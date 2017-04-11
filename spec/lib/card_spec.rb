@@ -1,6 +1,5 @@
 # encoding: UTF-8
 require 'spec_helper'
-require 'singleton'
 require 'log'
 require 'card'
 
@@ -51,34 +50,34 @@ describe Card, '#get_score' do
 
   context 'count card score correctly for titles rank' do
     it 'with zero scores in hand' do
-      card = Card.new('K', :clubs)
+      card = Card.new(:K, :clubs)
       expect(card.get_score).to eq 10
     end
 
     it 'with some scores in hand' do
-      card = Card.new('K', :clubs)
+      card = Card.new(:K, :clubs)
       expect(card.get_score(10)).to eq 10
     end
   end
 
   context 'count card score correctly for A' do
     it 'with zero scores in hand' do
-      card = Card.new('A', :clubs)
+      card = Card.new(:A, :clubs)
       expect(card.get_score).to eq 11
     end
 
     it 'with 21 scores in hand' do
-      card = Card.new('A', :clubs)
+      card = Card.new(:A, :clubs)
       expect(card.get_score(21)).to eq 1
     end
 
     it 'with 20 scores in hand' do
-      card = Card.new('A', :clubs)
+      card = Card.new(:A, :clubs)
       expect(card.get_score(20)).to eq 11
     end
 
     it 'with 22 scores in hand' do
-      card = Card.new('A', :clubs)
+      card = Card.new(:A, :clubs)
       expect(card.get_score(22)).to eq 1
     end
   end

@@ -1,9 +1,13 @@
 #!/bin/env ruby
 # encoding: UTF-8
+#
+# Web-application base blackjack
+#
+# Author:: Anastasiya Diachenko (mailto:anastasiya.a.diachenko@gmail.com)
+#
 
 require 'sinatra'
 require 'slim'
-require 'singleton'
 require 'logger'
 
 Dir['./lib/*.rb'].each { |file| load file }

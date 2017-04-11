@@ -7,6 +7,8 @@ module FinishState
   class << self
     def check_state(*); end
 
+    # Return available choices for player
+    # @return [Hash]
     def get_choices(game)
       unless game.is_a? Game
         raise "#{game} is not a Game"
@@ -19,6 +21,8 @@ module FinishState
       end
     end
 
+    # Trigger after game state changes on current
+    # @param [Game] game
     def after_change(game)
       game.dealer.open_cards
     end

@@ -10,6 +10,10 @@ class Hand
     @name = name
   end
 
+  # Add card to hand
+  # and open/close it
+  # @param [Card] card
+  # @param [True|False] open
   def add_card(card, open = true)
     unless card.is_a? Card
       raise "#{card} is not a Card"
@@ -25,6 +29,8 @@ class Hand
     logger.info "Card #{card} added to #{self}"
   end
 
+  # Add scores by card score
+  # @param [Card] card
   def add_scores(card)
     unless card.is_a? Card
       raise "#{card} is not a Card"
@@ -34,14 +40,17 @@ class Hand
     logger.info "Scores #{self}: #{@scores}"
   end
 
+  # Open all cards in hand
   def open_cards
     @cards.each{ |card| card.is_opened = true }
   end
 
+  # Return scores of all opened cards in hand
   def get_open_scores
     @cards.reduce(0) { |sum, card| card.is_opened ? sum += card.get_score : sum }
   end
 
+  # Hand to string
   def to_s
     "#{@name}"
   end

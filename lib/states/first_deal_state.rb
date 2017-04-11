@@ -7,6 +7,8 @@ module FirstDealState
   WIN_RATE = 1.5
 
   class << self
+    # Check if game state must change
+    # @param [Game] game
     def check_state(game)
       unless game.is_a? Game
         raise "#{game} is not a Game"

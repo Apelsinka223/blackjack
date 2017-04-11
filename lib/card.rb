@@ -1,7 +1,6 @@
 # encoding: UTF-8
 
 require_relative 'game'
-
 class Card
   attr_accessor :is_opened
   attr_reader :rank, :suit
@@ -20,10 +19,10 @@ class Card
   RANK_8 = 8
   RANK_9 = 9
   RANK_10 = 10
-  RANK_J = 'J'
-  RANK_Q = 'Q'
-  RANK_K = 'K'
-  RANK_A = 'A'
+  RANK_J = :J
+  RANK_Q = :q
+  RANK_K = :K
+  RANK_A = :A
 
   SCORE_RANK_TITLES = 10
   SCORE_RANK_A_MIN = 1
@@ -52,6 +51,11 @@ class Card
       SUIT_SPADES,
   ]
 
+  # Checks fi rank and suit are valid
+  #  and create card
+  # @param [Integer|Symbol] rank
+  # @param [Symbol] suit
+  #
   def initialize(rank, suit)
     unless RANKS.include? rank
       raise "Unknown rank #{rank}"
@@ -65,6 +69,9 @@ class Card
     @is_opened = false
   end
 
+  # Return card score
+  # depend on hand available scores
+  # @param [Integer] hand_scores
   def get_score(hand_scores = 0)
     unless hand_scores.is_a? Numeric
       raise 'Not numeric hand scores'
@@ -84,6 +91,7 @@ class Card
     end
   end
 
+  # Card to string
   def to_s
     "#{@rank}-#{@suit}"
   end

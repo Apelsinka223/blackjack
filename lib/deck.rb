@@ -2,6 +2,8 @@
 class Deck
   ENOUGH_SCORE = 42
 
+  # Create deck with all 52 cards
+  # and shuffle it
   def initialize
     @cards = [
         Card.new(Card::RANK_2, Card::SUIT_HEARTS),
@@ -60,10 +62,15 @@ class Deck
     @cards = @cards.shuffle
   end
 
+  # Return if cards in deck
+  # are enough to continue the game
+  # @return [True|False]
   def has_enough_cards?
     @cards.reduce(0) { |sum, card| sum + card.get_score} >= ENOUGH_SCORE
   end
 
+  # Return next card from deck
+  # @return [Card]
   def get_card
     @cards.pop
   end

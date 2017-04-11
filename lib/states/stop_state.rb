@@ -5,6 +5,8 @@ module StopState
   extend State
 
   class << self
+    # Check if game state must change
+    # @param [Game] game
     def check_state(game)
       unless game.is_a? Game
         raise "#{game} is not a Game"
@@ -22,10 +24,14 @@ module StopState
       game.change_state(FinishState)
     end
 
+    # Return available choices for player
+    # @return [Hash]
     def get_choices(*)
       {}
     end
 
+    # Trigger after game state changes on current
+    # @param [Game] game
     def after_change(game)
       game.dealer.open_cards
       while game.dealer.scores < Game::SCORE_DEALER_STOP do
