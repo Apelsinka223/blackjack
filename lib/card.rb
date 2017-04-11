@@ -20,7 +20,7 @@ class Card
   RANK_9 = 9
   RANK_10 = 10
   RANK_J = :J
-  RANK_Q = :q
+  RANK_Q = :Q
   RANK_K = :K
   RANK_A = :A
 

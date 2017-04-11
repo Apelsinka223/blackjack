@@ -8,15 +8,15 @@ html
   body
     .container
       h3 = "Баланс #{@game.balance}"
-      - unless @game.bet.nil?
+      - if @game.state != StartState
         h4 = "Ставка #{@game.bet}"
       .jumbotron
         - unless @game.result.nil?
           .result
             h1 = @game.result.upcase
 
-        - if @game.bet.nil?
-          == render :slim, :bet_form, :locals => {:balance => @game.balance, :error => @error}
+        - if @game.state == StartState
+          == render :slim, :bet_form, :locals => {:game => @game, :error => @error}
         - else
           == render :slim, :hand, :locals => {:hand => @game.dealer}
           == render :slim, :hand, :locals => {:hand => @game.player}

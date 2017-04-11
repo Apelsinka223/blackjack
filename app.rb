@@ -30,7 +30,7 @@ end
 get '/take_card' do
   @game = Game.instance
   if @game.has_choice? :take_card
-    @game.take_card(@game.player)
+    @game.take_card
   else
     logger.warn "Try to use choice task_card with state #{@game.state}"
   end
@@ -45,7 +45,6 @@ get '/bet' do
       logger.error @error
       slim :index
     else
-      @game.start_game
       redirect to('/')
     end
   else

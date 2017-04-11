@@ -26,6 +26,7 @@ class Game
   end
 
   # Sets bet if bet is valid
+  # and make first deal
   # or returns error
   # @param [Integer] bet
   # @return [Integer|String]
@@ -35,6 +36,7 @@ class Game
     end
 
     @bet = bet
+    first_deal
   end
 
   # Double current bet
@@ -54,11 +56,15 @@ class Game
     @state.check_state(self)
   end
 
+  def start_game
+    @result = nil
+    change_state(StartState)
+  end
+
   # Initialize hands,
   # reset result, substructs bet from balance,
   # deal first cards by hands
-  def start_game
-    @result = nil
+  def first_deal
     @balance -= @bet
     @player = Hand.new(:player)
     @dealer = Hand.new(:dealer)

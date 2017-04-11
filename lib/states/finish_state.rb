@@ -14,7 +14,7 @@ module FinishState
         raise "#{game} is not a Game"
       end
 
-      if game.balance >= game.bet and game.deck.has_enough_cards?
+      if game.balance >= 0 and game.deck.has_enough_cards?
         {:new_game => 'Сдать карты'}
       else
         {:restart_game => 'Перезапустить игру'}
