@@ -11,7 +11,7 @@ html
       - if @game.state != StartState
         h4 = "Ставка #{@game.bet}"
       .jumbotron
-        - unless @game.result.nil?
+        - if @game.result
           .result
             h1 = @game.result.upcase
 
@@ -21,5 +21,5 @@ html
           == render :slim, :hand, :locals => {:hand => @game.dealer}
           == render :slim, :hand, :locals => {:hand => @game.player}
 
-          - unless @game.get_choices.nil?
+          - if @game.get_choices
               == render :slim, :choices, :locals => {:choices => @game.get_choices}

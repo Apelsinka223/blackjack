@@ -1,5 +1,5 @@
 form class="form-inline" action="/bet"
-  - unless error.nil?
+  - if error
     p class="text-danger"
       = error
 

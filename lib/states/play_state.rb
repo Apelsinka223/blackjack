@@ -8,9 +8,7 @@ module PlayState
     # Check if game state must change
     # @param [Game] game
     def check_state(game)
-      unless game.is_a? Game
-        raise "#{game} is not a Game"
-      end
+      raise "#{game} is not a Game"  unless game.is_a? Game
 
       if game.player.scores == Game::SCORE_21
         game.change_state(StopState)

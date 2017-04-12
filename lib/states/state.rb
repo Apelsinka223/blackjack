@@ -6,19 +6,13 @@ module State
   # Check if game state must change
   # @param [Game] game
   def check_state(game)
-    unless game.is_a? Game
-      raise "#{game} is not a Game"
-    end
-
     raise 'Not implemented'
   end
 
   # Return available choices for player
   # @return [Hash]
   def get_choices(game)
-    unless game.is_a? Game
-      raise "#{game} is not a Game"
-    end
+    raise "#{game} is not a Game" unless game.is_a? Game
 
     choices = {
       :take_card => 'Взять карту',

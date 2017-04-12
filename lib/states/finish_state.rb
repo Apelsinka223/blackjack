@@ -10,11 +10,9 @@ module FinishState
     # Return available choices for player
     # @return [Hash]
     def get_choices(game)
-      unless game.is_a? Game
-        raise "#{game} is not a Game"
-      end
+      raise "#{game} is not a Game" unless game.is_a? Game
 
-      if game.balance >= 0 and game.deck.has_enough_cards?
+      if game.balance > 0 and game.deck.has_enough_cards?
         {:new_game => 'Сдать карты'}
       else
         {:restart_game => 'Перезапустить игру'}
@@ -24,6 +22,7 @@ module FinishState
     # Trigger after game state changes on current
     # @param [Game] game
     def after_change(game)
+      raise "#{game} is not a Game" unless game.is_a? Game
       game.dealer.open_cards
     end
   end

@@ -66,12 +66,13 @@ class Deck
   # are enough to continue the game
   # @return [True|False]
   def has_enough_cards?
-    @cards.reduce(0) { |sum, card| sum + card.get_score} >= ENOUGH_SCORE
+    @cards.reduce(0) { |sum, card| sum + card.get_score } >= ENOUGH_SCORE
   end
 
   # Return next card from deck
   # @return [Card]
   def get_card
+    raise 'Out of cards' if @cards.empty?
     @cards.pop
   end
 end

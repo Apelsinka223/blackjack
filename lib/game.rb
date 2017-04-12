@@ -35,8 +35,8 @@ class Game
       return 'Ставка должна быть больше 0 и меньше баланса'
     end
 
+    @balance -= bet
     @bet = bet
-    first_deal
   end
 
   # Double current bet
@@ -48,33 +48,10 @@ class Game
   # Deal card from deck to hand
   # @param [Hand] hand
   def take_card(hand)
-    unless hand.is_a? Hand
-      raise "#{hand} is not a Hand"
-    end
+    raise "#{hand} is not a Hand" unless hand.is_a? Hand
 
     hand.add_card(@deck.get_card)
     @state.check_state(self)
-  end
-
-  def start_game
-    @result = nil
-    change_state(StartState)
-  end
-
-  # Initialize hands,
-  # reset result, substructs bet from balance,
-  # deal first cards by hands
-  def first_deal
-    @balance -= @bet
-    @player = Hand.new(:player)
-    @dealer = Hand.new(:dealer)
-
-    @player.add_card(@deck.get_card)
-    @player.add_card(@deck.get_card)
-    @dealer.add_card(@deck.get_card)
-    @dealer.add_card(@deck.get_card, false)
-
-    change_state(FirstDealState)
   end
 
   # Reset all game arguments
@@ -90,9 +67,8 @@ class Game
   # and fill the result
   # @param [Integer] rate
   def player_win(rate)
-    unless rate.is_a? Numeric
-      raise "#{rate} is not Numeric"
-    end
+    raise "#{rate} is not Numeric" unless rate.is_a? Numeric
+
     if rate < 0
       raise 'Rate must be greater than 0'
     end
@@ -123,9 +99,7 @@ class Game
   # Change state
   # @param [State] state
   def change_state(state)
-    unless state.is_a? State
-      raise "#{state} is not a State"
-    end
+    raise "#{state} is not a State" unless state.is_a? State
 
     logger.info "State change from #{@state} to #{state}"
     @state = state
@@ -139,4 +113,12 @@ class Game
     @state.get_choices(self).has_key? choice
   end
 
+  def reset_result
+    @result = nil
+  end
+
+  def set_hands
+    @player = Hand.new(:player)
+    @dealer = Hand.new(:dealer)
+  end
 end

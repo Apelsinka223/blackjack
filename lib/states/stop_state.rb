@@ -8,9 +8,7 @@ module StopState
     # Check if game state must change
     # @param [Game] game
     def check_state(game)
-      unless game.is_a? Game
-        raise "#{game} is not a Game"
-      end
+      raise "#{game} is not a Game" unless game.is_a? Game
 
       if game.dealer.scores > 21
         game.player_win(WIN_RATE)
@@ -33,6 +31,8 @@ module StopState
     # Trigger after game state changes on current
     # @param [Game] game
     def after_change(game)
+      raise "#{game} is not a Game" unless game.is_a? Game
+
       game.dealer.open_cards
       while game.dealer.scores < Game::SCORE_DEALER_STOP do
         game.take_card(game.dealer)

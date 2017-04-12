@@ -57,12 +57,8 @@ class Card
   # @param [Symbol] suit
   #
   def initialize(rank, suit)
-    unless RANKS.include? rank
-      raise "Unknown rank #{rank}"
-    end
-    unless SUITS.include? suit
-      raise "Unknown suit #{suit}"
-    end
+    raise "Unknown rank #{rank}" unless RANKS.include? rank
+    raise "Unknown suit #{suit}" unless SUITS.include? suit
 
     @rank = rank
     @suit = suit

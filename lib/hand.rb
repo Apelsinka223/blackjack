@@ -15,12 +15,8 @@ class Hand
   # @param [Card] card
   # @param [True|False] open
   def add_card(card, open = true)
-    unless card.is_a? Card
-      raise "#{card} is not a Card"
-    end
-    unless !!open == open
-      raise "#{open} is not a Boolean"
-    end
+    raise "#{card} is not a Card" unless card.is_a? Card
+    raise "#{open} is not a Boolean" unless !!open == open
 
     card.is_opened = open
     @cards.push(card)
@@ -32,9 +28,7 @@ class Hand
   # Add scores by card score
   # @param [Card] card
   def add_scores(card)
-    unless card.is_a? Card
-      raise "#{card} is not a Card"
-    end
+    raise "#{card} is not a Card" unless card.is_a? Card
 
     @scores += card.get_score(@scores)
     logger.info "Scores #{self}: #{@scores}"
