@@ -2,6 +2,8 @@
 #
 # Instance Game holds main objects
 # that take part in the game
+require_relative 'log'
+
 class Game
   include Log
   attr_reader :player, :dealer, :deck, :balance, :bet, :state, :result
